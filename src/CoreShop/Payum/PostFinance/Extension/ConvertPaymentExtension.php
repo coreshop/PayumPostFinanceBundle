@@ -20,7 +20,7 @@ use Payum\Core\Extension\Context;
 use Payum\Core\Extension\ExtensionInterface;
 use Payum\Core\Request\Convert;
 
-final class LanguageExtension implements ExtensionInterface
+final class ConvertPaymentExtension implements ExtensionInterface
 {
     /**
      * @var OrderRepositoryInterface

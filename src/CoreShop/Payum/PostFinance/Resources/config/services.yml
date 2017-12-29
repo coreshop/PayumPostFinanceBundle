@@ -1,6 +1,6 @@
 services:
 
-    CoreShop\Payum\PostFinanceBundle\Extension\LanguageExtension:
+    CoreShop\Payum\PostFinanceBundle\Extension\ConvertPaymentExtension:
         autowire: true
         tags:
             - { name: payum.extension, alias: postfinance_language_extension, factory: postfinance, gateway: postfinance, prepend: false }
