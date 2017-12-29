@@ -1,0 +1,4 @@
+core_shop_payment:
+    pimcore_admin:
+        js:
+            postfinance: /bundles/payumpostfinance/pimcore/js/postfinance.js

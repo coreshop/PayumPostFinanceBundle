@@ -1,0 +1,17 @@
+services:
+
+    CoreShop\Payum\PostFinanceBundle\Extension\LanguageExtension:
+        autowire: true
+        tags:
+            - { name: payum.extension, alias: postfinance_language_extension, factory: postfinance, gateway: postfinance, prepend: false }
+
+    CoreShop\Payum\PostFinanceBundle\Form\Payment\PostFinanceType:
+        tags:
+            - { name: coreshop.gateway_configuration_type, type: postfinance }
+            - { name: form.type }
+
+    payum.postfinance_gateway_factory:
+        class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
+        arguments: [DachcomDigital\Payum\PostFinance\PostFinanceGatewayFactory]
+        tags:
+            - {name: payum.gateway_factory_builder, factory: postfinance }

@@ -1,0 +1,49 @@
+{
+    "name": "coreshop/payum-postfinance-bundle",
+    "type": "pimcore-bundle",
+    "description": "CoreShop - PostFinance Bundle",
+    "keywords": [
+        "coreshop",
+        "pimcore",
+        "ecommerce",
+        "postfinance"
+    ],
+    "homepage": "http://www.coreshop.org",
+    "license": "GPLv3",
+    "authors": [
+        {
+            "name": "DACHCOM.DIGITAL Stefan Hagspiel",
+            "email": "shagspiel@dachcom.ch",
+            "homepage": "http://www.dachcom.com/",
+            "role": "Developer"
+        },
+        {
+            "name": "Dominik Pfaffenbauer",
+            "email": "dominik@pfaffenbauer.at",
+            "homepage": "https://www.pfaffenbauer.at/",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.0",
+        "dachcom-digital/payum-postfinance": "dev-master"
+    },
+    "config": {
+        "bin-dir": "bin"
+    },
+    "autoload": {
+        "psr-4": {
+            "CoreShop\\Payum\\PostFinanceBundle\\": "src/CoreShop/Payum/PostFinance"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0-dev"
+        },
+        "pimcore": {
+            "bundles": [
+                "CoreShop\\Payum\\PostFinanceBundle"
+            ]
+        }
+    }
+}
