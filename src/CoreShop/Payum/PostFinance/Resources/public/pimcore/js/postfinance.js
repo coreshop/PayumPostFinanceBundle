@@ -26,7 +26,7 @@ coreshop.provider.gateways.postfinance = Class.create(coreshop.provider.gateways
         return [
             {
                 xtype: 'combobox',
-                fieldLabel: 'environment',
+                fieldLabel: t('postfinance.config.environment'),
                 name: 'gatewayConfig.config.environment',
                 value: config.environment ? config.environment : '',
                 store: storeEnvironments,
@@ -39,28 +39,28 @@ coreshop.provider.gateways.postfinance = Class.create(coreshop.provider.gateways
             },
             {
                 xtype: 'textfield',
-                fieldLabel: 'sha_in_passphrase',
+                fieldLabel: t('postfinance.config.sha_in_passphrase'),
                 name: 'gatewayConfig.config.shaInPassphrase',
                 length: 255,
                 value: config.shaInPassphrase ? config.shaInPassphrase : ""
             },
             {
                 xtype: 'textfield',
-                fieldLabel: 'sha_out_passphrase',
+                fieldLabel: t('postfinance.config.sha_out_passphrase'),
                 name: 'gatewayConfig.config.shaOutPassphrase',
                 length: 255,
                 value: config.shaOutPassphrase ? config.shaOutPassphrase : ""
             },
             {
                 xtype: 'textfield',
-                fieldLabel: 'pspid',
+                fieldLabel: t('postfinance.config.pspid'),
                 name: 'gatewayConfig.config.pspid',
                 length: 255,
                 value: config.pspid ? config.pspid : ""
             },
             {
                 xtype: 'textfield',
-                fieldLabel: 'default_parameters',
+                fieldLabel: t('postfinance.config.default_parameters'),
                 name: 'gatewayConfig.config.defaultParameters',
                 length: 255,
                 value: config.defaultParameters ? config.defaultParameters : ""

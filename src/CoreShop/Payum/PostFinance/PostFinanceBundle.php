@@ -13,8 +13,17 @@
 namespace CoreShop\Payum\PostFinanceBundle;
 
 use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
+use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
 
 class PostFinanceBundle extends AbstractPimcoreBundle
 {
+    use PackageVersionTrait;
 
+    /**
+     * @inheritDoc
+     */
+    protected function getComposerPackageName(): string
+    {
+        return 'coreshop/payum-postfinance-bundle';
+    }
 }

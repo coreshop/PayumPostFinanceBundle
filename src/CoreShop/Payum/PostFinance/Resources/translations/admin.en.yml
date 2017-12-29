@@ -1,0 +1,5 @@
+postfinance.config.environment: 'Environment'
+postfinance.config.sha_in_passphrase: 'SHA-In Passphrase'
+postfinance.config.sha_out_passphrase: 'SHA-Out Passphrase'
+postfinance.config.pspid: 'PSPID'
+postfinance.config.default_parameters: 'Default Parameters'
