@@ -33,7 +33,7 @@
     },
     "autoload": {
         "psr-4": {
-            "CoreShop\\Payum\\PostFinanceBundle\\": "src/CoreShop/Payum/PostFinance"
+            "CoreShop\\Payum\\PostFinanceBundle\\": "src/CoreShop/Payum/PostFinance/"
         }
     },
     "extra": {
@@ -42,7 +42,7 @@
         },
         "pimcore": {
             "bundles": [
-                "CoreShop\\Payum\\PostFinanceBundle"
+                "CoreShop\\Payum\\PostFinanceBundle\\PostFinanceBundle"
             ]
         }
     },
