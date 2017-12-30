@@ -8,11 +8,12 @@
  *
  * @copyright  Copyright (c) 2015-2017 Dominik Pfaffenbauer (https://www.pfaffenbauer.at)
  * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
-*/
+ */
 
 namespace CoreShop\Payum\PostFinanceBundle\Form\Payment;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -56,11 +57,15 @@ final class PostFinanceType extends AbstractType
                     ]),
                 ]
             ])
-            ->add('defaultParameters', TextType::class)
-
+            ->add('optionalParameters', CollectionType::class, [
+                'allow_add'    => true,
+                'allow_delete' => true,
+                'required'     => false
+            ])
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
                 $data = $event->getData();
                 //$data['payum.http_client'] = '@coreshop.payum.http_client';
             });
+
     }
 }

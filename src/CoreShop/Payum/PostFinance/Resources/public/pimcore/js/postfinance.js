@@ -13,6 +13,30 @@
 pimcore.registerNS('coreshop.provider.gateways.postfinance');
 coreshop.provider.gateways.postfinance = Class.create(coreshop.provider.gateways.abstract, {
 
+    /**
+     * @see https://e-payment.postfinance.ch/ncol/param_cookbook.asp
+     */
+    optionalFields: [
+        'PM',
+        'PMLISTTYPE',
+        'BRAND',
+        'TITLE',
+        'BGCOLOR',
+        'TXTCOLOR',
+        'TBLBGCOLOR',
+        'TBLTXTCOLOR',
+        'BUTTONBGCOLOR',
+        'BUTTONTXTCOLOR',
+        'LOGO',
+        'FONTTYPE',
+        'TP',
+        'ALIAS',
+        'ALIASOPERATION',
+        'ALIASUSAGE',
+        'ALIASPERSISTEDAFTERUSE',
+        'DEVICE'
+    ],
+
     getLayout: function (config) {
 
         var storeEnvironments = new Ext.data.ArrayStore({
@@ -21,6 +45,21 @@ coreshop.provider.gateways.postfinance = Class.create(coreshop.provider.gateways
                 ['test', 'Test'],
                 ['production', 'Production']
             ]
+        });
+
+        var optionalFields = [];
+        Ext.Array.each(this.optionalFields, function (field) {
+            var value = config.optionalParameters && config.optionalParameters[field] ? config.optionalParameters[field] : '';
+            optionalFields.push({
+                xtype: 'textfield',
+                fieldLabel: field,
+                name: 'gatewayConfig.config.optionalParameters.' + field,
+                length: 255,
+                flex: 1,
+                labelWidth: 250,
+                anchor: '100%',
+                value: value
+            })
         });
 
         return [
@@ -59,11 +98,16 @@ coreshop.provider.gateways.postfinance = Class.create(coreshop.provider.gateways
                 value: config.pspid ? config.pspid : ""
             },
             {
-                xtype: 'textfield',
-                fieldLabel: t('postfinance.config.default_parameters'),
-                name: 'gatewayConfig.config.defaultParameters',
-                length: 255,
-                value: config.defaultParameters ? config.defaultParameters : ""
+                xtype: 'fieldset',
+                title: t('postfinance.config.optional_parameter'),
+                collapsible: true,
+                collapsed: true,
+                autoHeight: true,
+                labelWidth: 250,
+                anchor: '100%',
+                flex: 1,
+                defaultType: 'textfield',
+                items: optionalFields
             }
         ];
     }
