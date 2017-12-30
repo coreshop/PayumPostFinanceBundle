@@ -47,7 +47,13 @@ coreshop.provider.gateways.postfinance = Class.create(coreshop.provider.gateways
             ]
         });
 
-        var optionalFields = [];
+        var optionalFields = [{
+            xtype: 'label',
+            anchor: '100%',
+            style: 'display:block; padding:5px; background:#f5f5f5; border:1px solid #eee; font-weight: 300;',
+            html: 'Parameter Cookbook: <a href="https://e-payment.postfinance.ch/ncol/param_cookbook.asp" target="_blank">https://e-payment.postfinance.ch/ncol/param_cookbook.aspa</a>'
+        }];
+
         Ext.Array.each(this.optionalFields, function (field) {
             var value = config.optionalParameters && config.optionalParameters[field] ? config.optionalParameters[field] : '';
             optionalFields.push({
