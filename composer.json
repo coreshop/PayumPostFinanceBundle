@@ -45,7 +45,5 @@
                 "CoreShop\\Payum\\PostFinanceBundle\\PostFinanceBundle"
             ]
         }
-    },
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    }
 }
