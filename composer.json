@@ -26,7 +26,7 @@
     ],
     "require": {
         "php": "^7.0",
-        "dachcom-digital/payum-postfinance": "dev-master"
+        "dachcom-digital/payum-postfinance": "~1.0.0"
     },
     "config": {
         "bin-dir": "bin"
