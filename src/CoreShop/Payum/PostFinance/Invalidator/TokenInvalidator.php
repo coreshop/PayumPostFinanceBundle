@@ -53,12 +53,12 @@ final class TokenInvalidator implements TokenInvalidatorInterface
 
             $targetUrl = $token->getTargetUrl();
 
-            if(empty($targetUrl)) {
+            if (empty($targetUrl)) {
                 continue;
             }
 
             // hacky: we only want to delete capture and after-pay tokens.
-            if(strpos($targetUrl, 'payment/capture') === false && strpos($targetUrl, 'cs/after-pay') === false) {
+            if (strpos($targetUrl, 'payment/capture') === false && strpos($targetUrl, 'cs/after-pay') === false) {
                 continue;
             }
 
@@ -72,18 +72,18 @@ final class TokenInvalidator implements TokenInvalidatorInterface
 
             /** @var PaymentProvider $paymentProvider */
             $paymentProvider = $payment->getPaymentProvider();
-            if(!$paymentProvider instanceof PaymentProvider) {
+            if (!$paymentProvider instanceof PaymentProvider) {
                 continue;
             }
 
             /** @var GatewayConfig $gatewayConfig */
             $gatewayConfig = $paymentProvider = $paymentProvider->getGatewayConfig();
-            if(!$gatewayConfig instanceof GatewayConfig) {
+            if (!$gatewayConfig instanceof GatewayConfig) {
                 continue;
             }
 
             //now only tokens from postfinance factory should get deleted!
-            if($gatewayConfig->getFactoryName() !== 'postfinance') {
+            if ($gatewayConfig->getFactoryName() !== 'postfinance') {
                 continue;
             }
 
@@ -98,9 +98,15 @@ final class TokenInvalidator implements TokenInvalidatorInterface
         }
 
         //cycle outdated and remove them.
+        if (count($outdatedTokens) === 0) {
+            return;
+        }
+
         foreach ($outdatedTokens as $outdatedToken) {
             $this->objectManager->remove($outdatedToken);
-            $this->objectManager->flush();
         }
+
+        $this->objectManager->flush();
+
     }
 }
