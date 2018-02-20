@@ -1,17 +1,69 @@
 services:
 
-    CoreShop\Payum\PostFinanceBundle\Extension\ConvertPaymentExtension:
-        autowire: true
-        tags:
-            - { name: payum.extension, alias: postfinance_language_extension, factory: postfinance, gateway: postfinance, prepend: false }
+    #
+    # Form Types
+    #
 
     CoreShop\Payum\PostFinanceBundle\Form\Payment\PostFinanceType:
         tags:
             - { name: coreshop.gateway_configuration_type, type: postfinance }
             - { name: form.type }
 
+    #
+    # Payum Factories
+    #
+
     payum.postfinance_gateway_factory:
         class: Payum\Core\Bridge\Symfony\Builder\GatewayFactoryBuilder
         arguments: [DachcomDigital\Payum\PostFinance\PostFinanceGatewayFactory]
         tags:
             - {name: payum.gateway_factory_builder, factory: postfinance }
+
+    #
+    # Payum Extensions
+    #
+
+    CoreShop\Payum\PostFinanceBundle\Extension\ConvertPaymentExtension:
+        autowire: true
+        tags:
+            - { name: payum.extension, alias: postfinance_language_extension, factory: postfinance, gateway: postfinance, prepend: false }
+
+    #
+    # Payum Overrides: Request Verifier
+    #
+
+    payum.http_request_verifier_builder:
+        class: CoreShop\Payum\PostFinanceBundle\Builder\HttpRequestVerifierBuilder
+
+    #
+    # Services
+    #
+
+    CoreShop\Payum\PostFinanceBundle\Invalidator\TokenInvalidatorInterface: '@CoreShop\Payum\PostFinanceBundle\Invalidator\TokenInvalidator'
+    CoreShop\Payum\PostFinanceBundle\Invalidator\TokenInvalidator:
+        arguments:
+            - '@payum'
+            - '@payum.entity_manager'
+
+    #
+    # Commands
+    #
+
+    CoreShop\Payum\PostFinanceBundle\Command\TokenInvalidationCommand:
+        arguments:
+            - '@CoreShop\Payum\PostFinanceBundle\Invalidator\TokenInvalidator'
+            - '%post_finance_token_expired_days%'
+        tags:
+          - { name: console.command, command: 'postfinance:invalidate-expired-tokens' }
+
+    #
+    # Maintenance Listener
+    #
+
+    CoreShop\Payum\PostFinanceBundle\EventListener\TokenInvalidationListener:
+        arguments:
+            - '@coreshop.configuration.service'
+            - '@CoreShop\Payum\PostFinanceBundle\Invalidator\TokenInvalidator'
+            - '%post_finance_token_expired_days%'
+        tags:
+            - { name: kernel.event_listener, event: pimcore.system.maintenance, method: registerInvalidator }

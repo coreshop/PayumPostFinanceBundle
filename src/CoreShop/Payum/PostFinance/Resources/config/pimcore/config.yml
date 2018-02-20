@@ -1,3 +1,6 @@
+parameters:
+    post_finance_token_expired_days: 2
+
 core_shop_payment:
     pimcore_admin:
         js:
