@@ -10,11 +10,13 @@ To prevent tokens to stay forever, there is also a Command and Maintenance Scrip
 ## Installation
 
 #### 1. Composer
-    ```json
-    "coreshop/payum-postfinance-bundle": "dev-master"
-    ```
+```json
+    "coreshop/payum-postfinance-bundle": "~1.0.0"
+```
+
 #### 2. Activate
 Enable the Bundle in Pimcore Extension Manager
+
 #### 3. Setup
 Go to Coreshop -> PaymentProvider and add a new Provider. Choose `postfinance` from `type` and fill out the required fields.
 
