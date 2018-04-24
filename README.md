@@ -7,6 +7,9 @@ There is nasty behaviour if a customer returns from the PostFinance payment page
 This Bundle will partly override the `HttpRequestVerifierBuilder` to prevent this invalidation (and triggers only if the paymentgateway matches with PostFinance.)
 To prevent tokens to stay forever, there is also a Command and Maintenance Script which removes outdated "Capture" and "After-Pay" tokens older than two days.
 
+## Requirements
+CoreShop >= 2.0.0-beta.1
+
 ## Installation
 
 #### 1. Composer
