@@ -34,7 +34,8 @@ coreshop.provider.gateways.postfinance = Class.create(coreshop.provider.gateways
         'ALIASOPERATION',
         'ALIASUSAGE',
         'ALIASPERSISTEDAFTERUSE',
-        'DEVICE'
+        'DEVICE',
+        'HOMEURL'
     ],
 
     getLayout: function (config) {

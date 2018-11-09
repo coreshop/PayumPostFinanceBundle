@@ -37,3 +37,8 @@ Remove outdated tokens
 ```bash
 $ bin/console postfinance:invalidate-expired-tokens --days=20
 ```
+
+## Changelog
+
+### v1.0.3
+- HOMEURL added (set to "NONE" if you don't want to display a "Back to Merchant Shop" Button on PostFinance Checkout)
