@@ -14,7 +14,7 @@ namespace CoreShop\Payum\PostFinanceBundle\Extension;
 
 use CoreShop\Component\Order\Model\OrderInterface;
 use CoreShop\Component\Order\Repository\OrderRepositoryInterface;
-use CoreShop\Component\Payment\Model\PaymentInterface;
+use CoreShop\Component\Core\Model\PaymentInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Extension\Context;
 use Payum\Core\Extension\ExtensionInterface;
@@ -60,7 +60,7 @@ final class ConvertPaymentExtension implements ExtensionInterface
         }
 
         /** @var OrderInterface $order */
-        $order = $this->orderRepository->find($payment->getOrderId());
+        $order = $payment->getOrder();
         $gatewayLanguage = 'en_EN';
 
         if (!empty($order->getLocaleCode())) {

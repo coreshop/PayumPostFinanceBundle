@@ -8,7 +8,7 @@ This Bundle will partly override the `HttpRequestVerifierBuilder` to prevent thi
 To prevent tokens to stay forever, there is also a Command and Maintenance Script which removes outdated "Capture" and "After-Pay" tokens older than two days.
 
 ## Requirements
-CoreShop >= 2.0.0-beta.1
+CoreShop >= 2.0.0-RC.2
 
 ## Installation
 
