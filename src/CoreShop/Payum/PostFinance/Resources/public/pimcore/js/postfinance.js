@@ -18,6 +18,7 @@ coreshop.provider.gateways.postfinance = Class.create(coreshop.provider.gateways
      */
     optionalFields: [
         'PM',
+        'PMLIST',
         'PMLISTTYPE',
         'BRAND',
         'TITLE',
