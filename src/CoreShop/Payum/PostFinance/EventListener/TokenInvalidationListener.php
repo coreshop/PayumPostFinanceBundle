@@ -8,53 +8,24 @@
  *
  * @copyright  Copyright (c) 2015-2020 Dominik Pfaffenbauer (https://www.pfaffenbauer.at)
  * @license    https://www.coreshop.org/license     GNU General Public License version 3 (GPLv3)
-*/
+ */
 
 namespace CoreShop\Payum\PostFinanceBundle\EventListener;
 
 use CoreShop\Component\Core\Configuration\ConfigurationServiceInterface;
 use CoreShop\Payum\PostFinanceBundle\Invalidator\TokenInvalidatorInterface;
-use Pimcore\Event\System\MaintenanceEvent;
-use Pimcore\Model\Schedule\Maintenance\Job;
+use Pimcore\Maintenance\TaskInterface;
 
-final class TokenInvalidationListener
+final class TokenInvalidationListener implements TaskInterface
 {
-    /**
-     * @var ConfigurationServiceInterface
-     */
-    private $configurationService;
-
-    /**
-     * @var TokenInvalidatorInterface
-     */
-    private $tokenInvalidator;
-
-    /**
-     * @var int
-     */
-    private $days;
-
-    /**
-     * TokenInvalidationListener constructor.
-     *
-     * @param ConfigurationServiceInterface $configurationService
-     * @param TokenInvalidatorInterface     $tokenInvalidator
-     * @param int                           $days
-     */
     public function __construct(
-        ConfigurationServiceInterface $configurationService,
-        TokenInvalidatorInterface $tokenInvalidator,
-        $days = 0
+        private readonly ConfigurationServiceInterface $configurationService,
+        private readonly TokenInvalidatorInterface $tokenInvalidator,
+        private $days = 0
     ) {
-        $this->configurationService = $configurationService;
-        $this->tokenInvalidator = $tokenInvalidator;
-        $this->days = $days;
     }
 
-    /**
-     * @param MaintenanceEvent $maintenanceEvent
-     */
-    public function registerInvalidator(MaintenanceEvent $maintenanceEvent)
+    public function execute(): void
     {
         $lastMaintenance = $this->configurationService->get('payum_postfinance.token_invalidation.last_run');
 
@@ -66,11 +37,7 @@ final class TokenInvalidationListener
 
         //since maintenance runs every 5 minutes, we need to check if the last update was 24 hours ago
         if ($timeDiff > 24 * 60 * 60) {
-            $manager = $maintenanceEvent->getManager();
-            $manager->registerJob(new Job('payum_postfinance.token_invalidation', [
-                $this->tokenInvalidator,
-                'invalidate'
-            ], [$this->days]));
+            $this->tokenInvalidator->invalidate($this->days);
             $this->configurationService->set('payum_postfinance.token_invalidation.last_run', time());
         }
     }

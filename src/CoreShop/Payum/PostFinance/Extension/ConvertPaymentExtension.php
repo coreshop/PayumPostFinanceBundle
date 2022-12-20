@@ -12,8 +12,6 @@
 
 namespace CoreShop\Payum\PostFinanceBundle\Extension;
 
-use CoreShop\Component\Order\Model\OrderInterface;
-use CoreShop\Component\Order\Repository\OrderRepositoryInterface;
 use CoreShop\Component\Core\Model\PaymentInterface;
 use Payum\Core\Bridge\Spl\ArrayObject;
 use Payum\Core\Extension\Context;
@@ -22,22 +20,6 @@ use Payum\Core\Request\Convert;
 
 final class ConvertPaymentExtension implements ExtensionInterface
 {
-    /**
-     * @var OrderRepositoryInterface
-     */
-    private $orderRepository;
-
-    /**
-     * @param OrderRepositoryInterface $orderRepository
-     */
-    public function __construct(OrderRepositoryInterface $orderRepository)
-    {
-        $this->orderRepository = $orderRepository;
-    }
-
-    /**
-     * @param Context $context
-     */
     public function onPostExecute(Context $context)
     {
         $action = $context->getAction();
@@ -59,14 +41,13 @@ final class ConvertPaymentExtension implements ExtensionInterface
             return;
         }
 
-        /** @var OrderInterface $order */
         $order = $payment->getOrder();
         $gatewayLanguage = 'en_EN';
 
         if (!empty($order->getLocaleCode())) {
             $orderLanguage = $order->getLocaleCode();
             // post finance always requires a full language ISO Code
-            if (strpos($orderLanguage, '_') === false) {
+            if (!str_contains($orderLanguage, '_')) {
                 $gatewayLanguage = $orderLanguage . '_' . strtoupper($orderLanguage);
             } else {
                 $gatewayLanguage = $orderLanguage;
@@ -78,20 +59,13 @@ final class ConvertPaymentExtension implements ExtensionInterface
         $result['LANGUAGE'] = $gatewayLanguage;
 
         $request->setResult((array)$result);
-
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onPreExecute(Context $context)
     {
 
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function onExecute(Context $context)
     {
     }

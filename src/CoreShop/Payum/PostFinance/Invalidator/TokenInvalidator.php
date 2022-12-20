@@ -12,45 +12,25 @@
 
 namespace CoreShop\Payum\PostFinanceBundle\Invalidator;
 
-use CoreShop\Bundle\PayumBundle\Model\GatewayConfig;
-use CoreShop\Bundle\PayumBundle\Model\PaymentSecurityToken;
+use CoreShop\Component\PayumPayment\Model\GatewayConfig;
+use CoreShop\Component\PayumPayment\Model\PaymentSecurityToken;
 use CoreShop\Component\Core\Model\PaymentProvider;
 use CoreShop\Component\Payment\Model\Payment;
+use Doctrine\ORM\EntityManagerInterface;
 use Payum\Core\Payum;
-use Payum\Core\Storage\StorageInterface;
-use Doctrine\Common\Persistence\ObjectManager;
 
 final class TokenInvalidator implements TokenInvalidatorInterface
 {
-    /**
-     * @var Payum
-     */
-    private $payum;
-
-    /**
-     * @var StorageInterface
-     */
-    private $objectManager;
-
-    /**
-     * TokenInvalidator constructor.
-     *
-     * @param Payum         $payum
-     * @param ObjectManager $objectManager
-     */
-    public function __construct(Payum $payum, ObjectManager $objectManager = null)
-    {
-        $this->payum = $payum;
-        $this->objectManager = $objectManager;
+    public function __construct(
+        private readonly Payum $payum,
+        private readonly EntityManagerInterface $entityManager
+    ) {
     }
 
-    /**
-     * @param $days
-     */
-    public function invalidate($days)
+    public function invalidate(int $days): void
     {
         $now = new \DateTime();
-        $repository = $this->objectManager->getRepository(PaymentSecurityToken::class);
+        $repository = $this->entityManager->getRepository(PaymentSecurityToken::class);
         $tokens = $repository->findAll();
 
         $outdatedTokens = [];
@@ -68,7 +48,7 @@ final class TokenInvalidator implements TokenInvalidatorInterface
             }
 
             // hacky: we only want to delete capture and after-pay tokens.
-            if (strpos($targetUrl, 'payment/capture') === false && strpos($targetUrl, 'cs/after-pay') === false) {
+            if (!str_contains($targetUrl, 'payment/capture') && !str_contains($targetUrl, 'cs/after-pay')) {
                 continue;
             }
 
@@ -113,10 +93,9 @@ final class TokenInvalidator implements TokenInvalidatorInterface
         }
 
         foreach ($outdatedTokens as $outdatedToken) {
-            $this->objectManager->remove($outdatedToken);
+            $this->entityManager->remove($outdatedToken);
         }
 
-        $this->objectManager->flush();
-
+        $this->entityManager->flush();
     }
 }
