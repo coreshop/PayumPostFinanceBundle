@@ -22,8 +22,8 @@ use Payum\Core\Payum;
 final class TokenInvalidator implements TokenInvalidatorInterface
 {
     public function __construct(
-        private readonly Payum $payum,
-        private readonly EntityManagerInterface $entityManager
+        private Payum $payum,
+        private EntityManagerInterface $entityManager
     ) {
     }
 

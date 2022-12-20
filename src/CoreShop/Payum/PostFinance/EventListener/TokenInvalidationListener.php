@@ -19,8 +19,8 @@ use Pimcore\Maintenance\TaskInterface;
 final class TokenInvalidationListener implements TaskInterface
 {
     public function __construct(
-        private readonly ConfigurationServiceInterface $configurationService,
-        private readonly TokenInvalidatorInterface $tokenInvalidator,
+        private ConfigurationServiceInterface $configurationService,
+        private TokenInvalidatorInterface $tokenInvalidator,
         private $days = 0
     ) {
     }
