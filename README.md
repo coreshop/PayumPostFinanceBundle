@@ -8,13 +8,13 @@ This Bundle will partly override the `HttpRequestVerifierBuilder` to prevent thi
 To prevent tokens to stay forever, there is also a Command and Maintenance Script which removes outdated "Capture" and "After-Pay" tokens older than two days.
 
 ## Requirements
-CoreShop >= 2.0.0-RC.2
+CoreShop >= 3.0
 
 ## Installation
 
 #### 1. Composer
 ```json
-    "coreshop/payum-postfinance-bundle": "~1.0.0"
+    "coreshop/payum-postfinance-bundle": "~2.0.0"
 ```
 
 #### 2. Activate
