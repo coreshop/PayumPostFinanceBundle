@@ -17,16 +17,11 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 final class PostFinanceType extends AbstractType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('environment', TextType::class, [
@@ -61,11 +56,7 @@ final class PostFinanceType extends AbstractType
                 'allow_add'    => true,
                 'allow_delete' => true,
                 'required'     => false
-            ])
-            ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-                $data = $event->getData();
-                //$data['payum.http_client'] = '@coreshop.payum.http_client';
-            });
+            ]);
 
     }
 }

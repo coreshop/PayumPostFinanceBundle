@@ -4,24 +4,24 @@ It requires the [dachcom-digital/payum-postfinance](https://github.com/dachcom-d
 
 ## Important Information
 There is nasty behaviour if a customer returns from the PostFinance payment page: PostFinance fires the callback page **twice** if the user clicks the *"abort"* or *"ok"* button. This leads to a "token not fond" since the token gets invalidated at the first request.
-This Bundle will partly override the `HttpRequestVerifierBuilder` to prevent this invalidation (and triggers only if the paymentgateway matches with PostFinance.)
+This Bundle will partly override the `HttpRequestVerifierBuilder` to prevent this invalidation (and triggers only if the payment gateway matches with PostFinance.)
 To prevent tokens to stay forever, there is also a Command and Maintenance Script which removes outdated "Capture" and "After-Pay" tokens older than two days.
 
 ## Requirements
-CoreShop >= 2.0.0-RC.2
+CoreShop >= 3.0
 
 ## Installation
 
 #### 1. Composer
 ```json
-    "coreshop/payum-postfinance-bundle": "~1.0.0"
+    "coreshop/payum-postfinance-bundle": "~2.0.0"
 ```
 
 #### 2. Activate
 Enable the Bundle in Pimcore Extension Manager
 
 #### 3. Setup
-Go to Coreshop -> PaymentProvider and add a new Provider. Choose `postfinance` from `type` and fill out the required fields.
+Go to CoreShop -> PaymentProvider and add a new Provider. Choose `postfinance` from `type` and fill out the required fields.
 
 ## Maintenance Listener
 Every 24h a maintenance script will remove `capture` and `after-pay` tokens older than two days.
@@ -39,6 +39,9 @@ $ bin/console postfinance:invalidate-expired-tokens --days=20
 ```
 
 ## Changelog
+
+### v2.0.0
+- CoreShop 3.0 ready
 
 ### v1.0.3
 - HOMEURL added (set to "NONE" if you don't want to display a "Back to Merchant Shop" Button on PostFinance Checkout)

@@ -69,4 +69,4 @@ services:
             - '@CoreShop\Payum\PostFinanceBundle\Invalidator\TokenInvalidator'
             - '%post_finance_token_expired_days%'
         tags:
-            - { name: kernel.event_listener, event: pimcore.system.maintenance, method: registerInvalidator }
+            - { name: pimcore.maintenance.task, type: payum_postfinance.token_invalidation }

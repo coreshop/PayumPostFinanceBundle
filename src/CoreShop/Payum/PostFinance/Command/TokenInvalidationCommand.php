@@ -20,33 +20,15 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class TokenInvalidationCommand extends Command
 {
-    /**
-     * @var TokenInvalidatorInterface
-     */
-    protected $tokenInvalidator;
-
-    /**
-     * @var int
-     */
-    protected $days;
-
-    /**
-     * TokenInvalidationCommand constructor.
-     *
-     * @param TokenInvalidatorInterface $tokenInvalidator
-     * @param int                       $days
-     */
-    public function __construct(TokenInvalidatorInterface $tokenInvalidator, $days = 0)
+    public function __construct(
+        protected TokenInvalidatorInterface $tokenInvalidator,
+        protected $days = 0
+    )
     {
-        $this->tokenInvalidator = $tokenInvalidator;
-        $this->days = $days;
         parent::__construct();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('postfinance:invalidate-expired-tokens')
@@ -58,10 +40,7 @@ final class TokenInvalidationCommand extends Command
             );
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $days = $this->days;
         if ($input->getOption('days')) {
@@ -71,5 +50,6 @@ final class TokenInvalidationCommand extends Command
         $output->writeln('Invalidate Tokens older than ' . $days . ' days.');
         $this->tokenInvalidator->invalidate($days);
 
+        return 0;
     }
 }

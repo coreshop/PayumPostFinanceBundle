@@ -20,24 +20,14 @@ use Payum\Core\Storage\StorageInterface;
 
 class HttpRequestVerifierBuilder
 {
-    /**
-     * @var RepositoryInterface
-     */
-    protected $paymentRepository;
-
-    public function __construct(RepositoryInterface $paymentRepository)
+    public function __construct(protected RepositoryInterface $paymentRepository)
     {
-        $this->paymentRepository = $paymentRepository;
     }
 
-    /**
-     * @param StorageInterface $tokenStorage
-     *
-     * @return HttpRequestVerifierInterface
-     */
-    public function build(StorageInterface $tokenStorage)
+    public function build(StorageInterface $tokenStorage): HttpRequestVerifierInterface
     {
         $inner = new InnerHttpRequestVerifier($tokenStorage);
+
         return new HttpRequestVerifier($this->paymentRepository, $tokenStorage, $inner);
     }
 
