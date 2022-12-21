@@ -28,7 +28,7 @@ final class TokenInvalidationCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('postfinance:invalidate-expired-tokens')
