@@ -20,14 +20,13 @@ services:
             - {name: payum.gateway_factory_builder, factory: postfinance }
 
     #
-    # Payum Extensions
+    # Payum Action
     #
 
-    CoreShop\Payum\PostFinanceBundle\Extension\ConvertPaymentExtension:
-        autowire: true
+    CoreShop\Payum\PostFinanceBundle\Action\ConvertCoreShopPaymentAction:
         public: true
         tags:
-            - { name: payum.extension, alias: postfinance_language_extension, factory: postfinance, gateway: postfinance, prepend: false }
+            - { name: payum.action, alias: postfinance_coreshop_action, factory: postfinance, gateway: postfinance, prepend: true }
 
     #
     # Payum Overrides: Request Verifier
